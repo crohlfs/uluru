@@ -215,7 +215,7 @@ impl<T, const N: usize> LRUCache<T, N> {
 
     /// Iterate mutably over the contents of this cache in order from most-recently-used to
     /// least-recently-used.
-    fn iter_mut(&mut self) -> IterMut<'_, T, N> {
+    pub fn iter_mut(&mut self) -> IterMut<'_, T, N> {
         IterMut {
             pos: self.head,
             cache: self,
@@ -300,13 +300,13 @@ where
 }
 
 /// Mutable iterator over values in an `LRUCache`, from most-recently-used to least-recently-used.
-struct IterMut<'a, T, const N: usize> {
+pub struct IterMut<'a, T, const N: usize> {
     cache: &'a mut LRUCache<T, N>,
     pos: u16,
 }
 
 impl<'a, T, const N: usize> IterMut<'a, T, N> {
-    fn next(&mut self) -> Option<(u16, &mut T)> {
+    pub fn next(&mut self) -> Option<(u16, &mut T)> {
         let index = self.pos;
         let entry = self.cache.entries.get_mut(index as usize)?;
 
